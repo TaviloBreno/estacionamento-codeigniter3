@@ -41,6 +41,9 @@
                                 <div class="nav-item">
                                     <a data-toggle="tooltip" data-placement="top" title="Precificações" href="<?php echo base_url('precificacoes'); ?>"><i class="ik ik-dollar-sign"></i><span>Precificações</span></a>
                                 </div>
+								<div class="nav-item">
+                                    <a data-toggle="tooltip" data-placement="top" title="Formas de Pagamento" href="<?php echo base_url('formas'); ?>"><i class="fas fa-comment-dollar"></i><span>Formas de Pagamento</span></a>
+                                </div>
                             </nav>
                         </div>
                     </div>
