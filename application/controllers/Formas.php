@@ -116,4 +116,15 @@ class Formas extends CI_Controller
 			return TRUE;
 		}
 	}
+
+public function del($forma_pagamento_id = NULL)
+	{
+		if (!$this->core_model->get_by_id('formas_pagamentos', ['forma_pagamento_id' => $forma_pagamento_id])) {
+			$this->session->set_flashdata('error', 'Forma de pagamento não encontrada');
+			redirect($this->router->fetch_class());
+		}
+
+		$this->core_model->delete('formas_pagamentos', ['forma_pagamento_id' => $forma_pagamento_id]);
+		redirect($this->router->fetch_class());
+	}
 }
