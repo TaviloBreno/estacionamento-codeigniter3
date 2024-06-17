@@ -83,7 +83,31 @@ class Formas extends CI_Controller
 					);
 
 					$data = html_escape($data);
+// Editando
+					$this->form_validation->set_rules('forma_pagamento_nome', 'Nome da Forma de Pagamento', 'trim|required|min_length[4]|max_length[45]|callback_check_pagamento_nome');
+					$this->form_validation->set_rules('forma_pagamento_ativa', 'Ativa', 'trim|required');
 
+					if ($this->form_validation->run()) {
+						$data = elements(
+							[
+								'forma_pagamento_nome',
+								'forma_pagamento_ativa',
+							],
+							$this->input->post()
+						);
+
+						$data = html_escape($data);
+
+						// Check if data is the same as in the database
+						$existing_data = $this->core_model->get_by_id('formas_pagamentos', ['forma_pagamento_id' => $forma_pagamento_id]);
+						if ($existing_data->forma_pagamento_nome == $data['forma_pagamento_nome'] && $existing_data->forma_pagamento_ativa == $data['forma_pagamento_ativa']) {
+							$this->session->set_flashdata('warning', 'Nenhuma alteração foi feita.');
+							redirect($this->router->fetch_class());
+						} else {
+							$this->core_model->update('formas_pagamentos', $data, ['forma_pagamento_id' => $forma_pagamento_id]);
+							redirect($this->router->fetch_class());
+						}
+					}
 					$this->core_model->update('formas_pagamentos', $data, ['forma_pagamento_id' => $forma_pagamento_id]);
 					redirect($this->router->fetch_class());
 
@@ -117,7 +141,7 @@ class Formas extends CI_Controller
 		}
 	}
 
-public function del($forma_pagamento_id = NULL)
+	public function del($forma_pagamento_id = NULL)
 	{
 		if (!$this->core_model->get_by_id('formas_pagamentos', ['forma_pagamento_id' => $forma_pagamento_id])) {
 			$this->session->set_flashdata('error', 'Forma de pagamento não encontrada');
