@@ -173,4 +173,15 @@ class Mensalistas extends CI_Controller
 			}
 		}
 	}
+
+	public function del($mensalista_id = NULL)
+	{
+		if(!$mensalista_id || !$this->core_model->get_by_id('mensalistas', ['mensalista_id' => $mensalista_id])) {
+			$this->session->set_flashdata('error', 'Mensalista não encontrado');
+			redirect($this->router->fetch_class());
+		}
+
+		$this->core_model->delete('mensalistas', ['mensalista_id' => $mensalista_id]);
+		redirect($this->router->fetch_class());
+	}
 }
