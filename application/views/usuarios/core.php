@@ -38,7 +38,7 @@
 									: '';
 								?></h3></div>
 						<div class="card-body">
-							<form class="forms-sample" method="post" action="<?php echo base_url('usuarios/core'); ?>">
+							<form class="forms-sample" method="post" action="<?php echo base_url('usuarios/core/'.$usuario->id); ?>">
 								<!-- Agrupamento Nome de usuário e Email -->
 								<div class="form-row">
 									<div class="form-group col-md-6">
@@ -86,7 +86,7 @@
 									</div>
 								</div>
 
-								<!-- Agrupamento Perfil de Acesso e Status Ativo -->
+								<!-- Agrupamento Perfil de Acesso e Status active -->
 								<div class="form-row">
 									<div class="form-group col-md-6">
 										<label for="perfil_acesso">Perfil de Acesso</label>
@@ -103,8 +103,8 @@
 										<?php echo form_error('perfil_acesso', '<div class="text-danger">', '</div>'); ?>
 									</div>
 									<div class="form-group col-md-6">
-										<label for="ativo">Está ativo?</label>
-										<select class="form-control" id="ativo" name="ativo">
+										<label for="active">Está active?</label>
+										<select class="form-control" id="active" name="active">
 											<option value="">Nenhum</option> <!-- Opção padrão -->
 											<?php if ($usuario): ?>
 												<option value="1" <?php echo $usuario->active == 1 ? 'selected' : ''; ?>>Sim</option>
@@ -114,7 +114,7 @@
 												<option value="0">Não</option>
 											<?php endif; ?>
 										</select>
-										<?php echo form_error('ativo', '<div class="text-danger">', '</div>'); ?>
+										<?php echo form_error('active', '<div class="text-danger">', '</div>'); ?>
 									</div>
 								</div>
 
@@ -134,10 +134,19 @@
 									</div>
 								</div>
 
-								<input type="hidden" name="usuario_id" value="<?php echo (isset($usuario->id) ? $usuario->id : '') ?>" />
+								<?php if(isset($usuario)): ?>
+								<div class="form-group">
+									<div class="col-md-12">
+										<input type="hidden" name="usuario_id"
+											   value="<?php echo isset($usuario) ? $usuario->id : ''; ?>">
+									</div>
+								</div>
+								<?php endif; ?>
 
-								<button type="submit" class="btn btn-primary mr-2">Enviar</button>
-								<button type="button" class="btn btn-light" onclick="history.back();">Cancelar</button>
+								<button type="submit" class="btn btn-primary mr-2">
+									<?php echo isset($usuario) ? 'Atualizar' : 'Criar'; ?>
+								</button>
+								<a type="button" class="btn btn-light" href="<?php echo base_url($this->router->fetch_class()); ?>">Cancelar</a>
 							</form>
 						</div>
 
