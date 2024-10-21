@@ -46,6 +46,7 @@
 										<th>Usuário</th>
 										<th>E-mail</th>
 										<th>Nome</th>
+										<th>Perfil de acesso</th>
 										<th>Ativo</th>
 										<th class="nosort">Ações</th>
 									</tr>
@@ -58,11 +59,14 @@
 										<td><?php echo $usuario->email; ?></td>
 										<td><?php echo $usuario->first_name.' '.$usuario->last_name;?></td>
 										<td>
+											<?php echo ($this->ion_auth->is_admin($usuario->id) ? 'Administrador' : 'Atendente'); ?>
+										</td>
+										<td>
 											<?php echo ($usuario->active == 1 ? '<span class="badge badge-success">Sim</span>' : '<span class="badge badge-danger">Não</span>'); ?>
 										</td>
 										<td>
-											<a href="<?php echo base_url('usuarios/edit/'.$usuario->id); ?>" data-toggle="tooltip" data-placement="top" title="Editar" class="text-primary" style="font-size: 1.2em;"><i class="ik ik-edit"></i></a>
-											<a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Excluir" class="text-danger delete" data-id="<?php echo $usuario->id; ?>" style="font-size: 1.2em;"><i class="ik ik-trash-2"></i></a>
+											<a data-toggle="tooltip" data-placement="bottom" title="Editar <?php echo $this->router->fetch_class(); ?>" href="<?php echo base_url('usuarios/edit/'.$usuario->id); ?>" class="text-primary" style="font-size: 1.2em;"><i class="ik ik-edit"></i></a>
+											<a data-toggle="tooltip" data-placement="top" title="Excluir <?php echo $this->router->fetch_class(); ?>" href="javascript:void(0);" class="text-danger delete" data-id="<?php echo $usuario->id; ?>" style="font-size: 1.2em;"><i class="ik ik-trash-2"></i></a>
 										</td>
 									</tr>
 									<?php endforeach; ?>
