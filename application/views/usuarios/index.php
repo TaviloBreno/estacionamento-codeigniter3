@@ -36,7 +36,10 @@
 						<div class="card">
 							<div class="card-header"><h3><?php echo $titulo; ?></h3></div>
 							<div class="card-body">
-								<table id="data_table" class="table">
+								<a href="<?php echo base_url('usuarios/add'); ?>" class="btn btn-primary"><i class="ik ik-plus"></i> Novo Usuário</a>
+							</div>
+							<div class="card-body">
+								<table class="table data_table">
 									<thead>
 									<tr>
 										<th>#</th>

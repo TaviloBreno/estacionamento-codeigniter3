@@ -28,6 +28,11 @@
 
 	<link rel="stylesheet" href="<?php echo base_url('public/'); ?>dist/css/theme.min.css">
 	<script src="<?php echo base_url('public/'); ?>src/js/vendor/modernizr-2.8.3.min.js"></script>
+	<?php if (isset($styles)): ?>
+		<?php foreach ($styles as $style): ?>
+			<link rel="stylesheet" href="<?php echo base_url('public/').$style; ?>">
+		<?php endforeach; ?>
+	<?php endif; ?>
 </head>
 
 <body>
