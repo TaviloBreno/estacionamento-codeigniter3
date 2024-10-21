@@ -7,6 +7,15 @@
 		<div class="main-content">
 			<div class="container-fluid">
 				<h1>Home</h1>
+				<?php if($message = $this->session->flashdata('sucesso')): ?>
+					<div class="alert alert-success alert-dismissible fade show" role="alert">
+						<strong>Sucesso!</strong> <?php echo $message; ?>
+						<button type="button" class="close" data-dismiss="alert" aria-label="Fechar">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				<?php endif; ?>
+
 			</div>
 		</div>
 
