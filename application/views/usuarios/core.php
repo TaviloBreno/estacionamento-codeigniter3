@@ -38,7 +38,7 @@
 									: '';
 								?></h3></div>
 						<div class="card-body">
-							<form class="forms-sample" method="post" action="<?php echo base_url('usuarios/core/'.$usuario->id); ?>">
+							<form class="forms-sample" method="post" action="<?php echo base_url('usuarios/core/'.(isset($usuario) ? $usuario->id : '')); ?>">
 								<!-- Agrupamento Nome de usuário e Email -->
 								<div class="form-row">
 									<div class="form-group col-md-6">

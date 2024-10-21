@@ -29,6 +29,45 @@ class Usuarios extends CI_Controller
 	{
 		if (!$usuario_id) {
 
+			$this->form_validation->set_rules('first_name', 'Nome', 'trim|required|min_length[5]|max_length[20]');
+			$this->form_validation->set_rules('last_name', 'Sobrenome', 'trim|min_length[5]|max_length[20]');
+			$this->form_validation->set_rules('email', 'E-mail', 'trim|required|valid_email|max_length[100]|is_unique[users.email]');
+			$this->form_validation->set_rules('username', 'Usuário', 'trim|required|min_length[5]|max_length[45]|is_unique[users.username]');
+			$this->form_validation->set_rules('phone', 'Telefone', 'trim|max_length[15]');
+			$this->form_validation->set_rules('password', 'Senha', 'trim|required|min_length[6]');
+			$this->form_validation->set_rules('confirm_password', 'Confirmação de senha', 'matches[password]');
+
+			if ($this->form_validation->run()) {
+				$username = html_escape($this->input->post('username'));
+				$password = html_escape($this->input->post('password'));
+				$email = html_escape($this->input->post('email'));
+				$additional_data = array(
+					'first_name' => $this->input->post('first_name'),
+					'last_name' => $this->input->post('last_name'),
+					'phone' => $this->input->post('phone'),
+					'active' => $this->input->post('active'),
+				);
+				$group = array($this->input->post('perfil_acesso'));
+
+				if($this->ion_auth->register($username, $password, $email, $additional_data, $group)) {
+					$this->session->set_flashdata('sucesso', 'Usuário cadastrado com sucesso');
+				} else {
+					$this->session->set_flashdata('error', 'Erro ao cadastrar usuário');
+				}
+
+				redirect($this->router->fetch_class());
+
+			} else {
+				$data = array(
+					'titulo' => 'Cadastrar Usuário',
+					'subtitulo' => 'Novo usuário',
+				);
+
+				$this->load->view('layout/header', $data);
+				$this->load->view('usuarios/core');
+				$this->load->view('layout/footer');
+			}
+
 		} else {
 			if (!$this->ion_auth->user($usuario_id)->row()) {
 				$this->session->set_flashdata('error', 'Usuário não encontrado');
